@@ -1,25 +1,123 @@
 <!doctype html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Prueba Tailwind</title>
+  <meta charset="UTF-8" />
+  <title>Dashboard</title>
 
-  <!-- Tailwind CDN -->
+  <!-- Tailwind -->
   <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
-<body class="bg-gray-100 p-10">
 
-  <h1 class="text-4xl font-bold text-blue-600 mb-4">
-    Hola Tailwind 👋
-  </h1>
+<body class="bg-gray-100 p-8">
 
-  <p class="text-gray-700 mb-6">
-    Si ves esto bonito, Tailwind ya está funcionando.
-  </p>
+  <!-- Header -->
+  <div class="mb-6">
+    <h1 class="text-2xl font-bold">Dashboard</h1>
+    <p class="text-gray-500">Bienvenido de nuevo, admin.</p>
+  </div>
 
-  <button class="bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-600">
-    Botón de prueba
-  </button>
+  <!-- Tarjetas superiores -->
+  <div class="grid grid-cols-4 gap-4 mb-6">
+
+    <div class="bg-white p-4 rounded-lg shadow">
+      <div class="flex justify-between items-center">
+        <p class="text-sm text-gray-500">Usuarios Totales</p>
+        <span class="text-xs bg-green-100 text-green-600 px-2 py-1 rounded">+12%</span>
+      </div>
+      <p class="text-2xl font-bold mt-2">8,249</p>
+      <p class="text-xs text-gray-400">Aumento 1,093 esta semana</p>
+    </div>
+
+    <div class="bg-white p-4 rounded-lg shadow">
+      <div class="flex justify-between items-center">
+        <p class="text-sm text-gray-500">Ingresos</p>
+        <span class="text-xs bg-green-100 text-green-600 px-2 py-1 rounded">+8%</span>
+      </div>
+      <p class="text-2xl font-bold mt-2">$24,780</p>
+      <p class="text-xs text-gray-400">$2,567 más que el mes pasado</p>
+    </div>
+
+    <div class="bg-white p-4 rounded-lg shadow">
+      <div class="flex justify-between items-center">
+        <p class="text-sm text-gray-500">Sesiones Activas</p>
+        <span class="text-xs bg-red-100 text-red-600 px-2 py-1 rounded">-3%</span>
+      </div>
+      <p class="text-2xl font-bold mt-2">1,342</p>
+      <p class="text-xs text-gray-400">42 menos que ayer</p>
+    </div>
+
+    <div class="bg-white p-4 rounded-lg shadow">
+      <div class="flex justify-between items-center">
+        <p class="text-sm text-gray-500">Tasa de Conversión</p>
+        <span class="text-xs bg-green-100 text-green-600 px-2 py-1 rounded">+5%</span>
+      </div>
+      <p class="text-2xl font-bold mt-2">24.8%</p>
+      <p class="text-xs text-gray-400">1.2% más que el promedio</p>
+    </div>
+
+  </div>
+
+  <!-- Gráficas -->
+  <div class="grid grid-cols-2 gap-6">
+
+    <div class="bg-white p-6 rounded-lg shadow h-80">
+      <h2 class="font-semibold mb-4">Crecimiento de Usuarios</h2>
+      <canvas id="lineChart"></canvas>
+    </div>
+
+    <div class="bg-white p-6 rounded-lg shadow h-80">
+      <h2 class="font-semibold mb-4">Ingresos Mensuales</h2>
+      <canvas id="barChart"></canvas>
+    </div>
+
+  </div>
+
+  <!-- Scripts -->
+  <script>
+    const lineCtx = document.getElementById('lineChart').getContext('2d');
+    new Chart(lineCtx, {
+      type: 'line',
+      data: {
+        labels: ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'],
+        datasets: [
+          {
+            label: 'Usuarios 2024',
+            data: [5000,5500,6000,6500,7000,7300,7600,8000,8249,8500,8800,9000],
+            borderColor: 'rgb(59,130,246)',
+            backgroundColor: 'rgba(59,130,246,0.1)',
+            fill: true,
+            tension: 0.3
+          },
+          {
+            label: 'Usuarios 2023',
+            data: [4000,4300,4600,4900,5200,5500,5800,6100,6400,6700,7000,7300],
+            borderColor: 'rgb(156,163,175)',
+            backgroundColor: 'rgba(156,163,175,0.1)',
+            fill: true,
+            tension: 0.3
+          }
+        ]
+      },
+      options: { maintainAspectRatio: false }
+    });
+
+    const barCtx = document.getElementById('barChart').getContext('2d');
+    new Chart(barCtx, {
+      type: 'bar',
+      data: {
+        labels: ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'],
+        datasets: [{
+          label: 'Ingresos 2024 ($)',
+          data: [15000,16500,18000,19500,21000,22500,23500,24500,25500,27000,28500,30000],
+          backgroundColor: 'rgba(59,130,246,0.8)'
+        }]
+      },
+      options: { maintainAspectRatio: false }
+    });
+  </script>
 
 </body>
 </html>
